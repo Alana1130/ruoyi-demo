@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.web.mapper.travel.XlAaTeamMapper">
+    <resultMap id="BaseResultMap" type="com.ruoyi.web.domain.travel.XlAaTeam">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="travel_name" property="travelName" />
+        <result column="creator_id" property="creatorId" />
+        <result column="status" property="status" />
+        <result column="join_code" property="joinCode" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+
+    <insert id="insert" parameterType="com.ruoyi.web.domain.travel.XlAaTeam" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO xl_aa_team (name, travel_name, creator_id, status, join_code, create_time, update_time)
+        VALUES (#{name}, #{travelName}, #{creatorId}, #{status}, #{joinCode}, NOW(), NOW())
+    </insert>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT * FROM xl_aa_team WHERE id = #{id}
+    </select>
+
+    <select id="selectByJoinCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT * FROM xl_aa_team WHERE join_code = #{joinCode}
+    </select>
+
+    <select id="selectByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT t.* FROM xl_aa_team t
+        JOIN xl_aa_team_member m ON t.id = m.team_id
+        WHERE m.user_id = #{userId}
+        ORDER BY t.create_time DESC
+    </select>
+
+    <update id="update" parameterType="com.ruoyi.web.domain.travel.XlAaTeam">
+        UPDATE xl_aa_team
+        SET name = #{name},
+            travel_name = #{travelName},
+            status = #{status},
+            update_time = NOW()
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        DELETE FROM xl_aa_team WHERE id = #{id}
+    </delete>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT * FROM xl_aa_team ORDER BY create_time DESC
+    </select>
+</mapper>

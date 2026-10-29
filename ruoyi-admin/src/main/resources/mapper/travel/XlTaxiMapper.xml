@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.web.mapper.travel.XlTaxiMapper">
+    <resultMap type="com.ruoyi.web.domain.travel.XlTaxi" id="XlTaxiResult">
+        <id property="id" column="id"/>
+        <result property="destinationId" column="destination_id"/>
+        <result property="name" column="name"/>
+        <result property="appType" column="app_type"/>
+        <result property="description" column="description"/>
+        <result property="phone" column="phone"/>
+        <result property="link" column="link"/>
+        <result property="priceApprox" column="price_approx"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+    <select id="selectByDestinationId" resultMap="XlTaxiResult">
+        select id, destination_id, name, app_type, description, phone, link, price_approx, create_by, create_time, update_by, update_time, remark from xl_taxi where destination_id = #{destinationId} order by id
+    </select>
+</mapper>

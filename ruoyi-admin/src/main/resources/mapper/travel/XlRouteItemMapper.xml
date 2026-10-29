@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.web.mapper.travel.XlRouteItemMapper">
+    <resultMap type="com.ruoyi.web.domain.travel.XlRouteItem" id="XlRouteItemResult">
+        <id property="id" column="id"/>
+        <result property="routeId" column="route_id"/>
+        <result property="dayNo" column="day_no"/>
+        <result property="itemType" column="item_type"/>
+        <result property="itemId" column="item_id"/>
+        <result property="sortOrder" column="sort_order"/>
+        <result property="transportApprox" column="transport_approx"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+    <select id="selectByRouteId" resultMap="XlRouteItemResult">
+        select id, route_id, day_no, item_type, item_id, sort_order, transport_approx, create_by, create_time, update_by, update_time, remark from xl_route_item where route_id = #{routeId} order by day_no, sort_order
+    </select>
+</mapper>

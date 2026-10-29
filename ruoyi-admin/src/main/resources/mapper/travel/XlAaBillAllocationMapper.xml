@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.web.mapper.travel.XlAaBillAllocationMapper">
+    <resultMap id="BaseResultMap" type="com.ruoyi.web.domain.travel.XlAaBillAllocation">
+        <id column="id" property="id" />
+        <result column="bill_id" property="billId" />
+        <result column="user_id" property="userId" />
+        <result column="amount" property="amount" />
+        <result column="paid_amount" property="paidAmount" />
+        <result column="status" property="status" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+
+    <insert id="insert" parameterType="com.ruoyi.web.domain.travel.XlAaBillAllocation">
+        INSERT INTO xl_aa_bill_allocation (bill_id, user_id, amount, paid_amount, status, create_time, update_time)
+        VALUES (#{billId}, #{userId}, #{amount}, #{paidAmount}, #{status}, NOW(), NOW())
+    </insert>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT * FROM xl_aa_bill_allocation WHERE id = #{id}
+    </select>
+
+    <select id="selectByBillId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT * FROM xl_aa_bill_allocation WHERE bill_id = #{billId}
+    </select>
+
+    <update id="update" parameterType="com.ruoyi.web.domain.travel.XlAaBillAllocation">
+        UPDATE xl_aa_bill_allocation
+        SET paid_amount = #{paidAmount},
+            status = #{status},
+            update_time = NOW()
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteByBillId" parameterType="java.lang.Long">
+        DELETE FROM xl_aa_bill_allocation WHERE bill_id = #{billId}
+    </delete>
+</mapper>

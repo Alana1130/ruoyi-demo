@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.web.mapper.travel.XlTripCountdownMapper">
+    <resultMap type="com.ruoyi.web.domain.travel.XlTripCountdown" id="XlTripCountdownResult">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="title" column="title"/>
+        <result property="destinationId" column="destination_id"/>
+        <result property="tripDate" column="trip_date"/>
+        <result property="remindDays" column="remind_days"/>
+        <result property="memo" column="memo"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+    <insert id="insert" parameterType="com.ruoyi.web.domain.travel.XlTripCountdown" useGeneratedKeys="true" keyProperty="id">
+        insert into xl_trip_countdown (user_id, title, destination_id, trip_date, remind_days, memo, create_time, update_time)
+        values (#{userId}, #{title}, #{destinationId}, #{tripDate}, #{remindDays}, #{memo}, now(), now())
+    </insert>
+    <update id="update" parameterType="com.ruoyi.web.domain.travel.XlTripCountdown">
+        update xl_trip_countdown set title=#{title}, destination_id=#{destinationId}, trip_date=#{tripDate}, remind_days=#{remindDays}, memo=#{memo}, update_time=now() where id=#{id} and user_id=#{userId}
+    </update>
+    <delete id="deleteById">
+        delete from xl_trip_countdown where id=#{id} and user_id=#{userId}
+    </delete>
+    <select id="selectById" resultMap="XlTripCountdownResult">
+        select id, user_id, title, destination_id, trip_date, remind_days, memo, create_time, update_time from xl_trip_countdown where id=#{id}
+    </select>
+    <select id="selectByUserId" resultMap="XlTripCountdownResult">
+        select id, user_id, title, destination_id, trip_date, remind_days, memo, create_time, update_time from xl_trip_countdown where user_id=#{userId} order by trip_date asc
+    </select>
+</mapper>

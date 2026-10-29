@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.web.mapper.travel.XlAaExpenseMapper">
+    <resultMap id="BaseResultMap" type="com.ruoyi.web.domain.travel.XlAaExpense">
+        <id column="id" property="id" />
+        <result column="bill_id" property="billId" />
+        <result column="team_id" property="teamId" />
+        <result column="user_id" property="userId" />
+        <result column="expense_name" property="expenseName" />
+        <result column="amount" property="amount" />
+        <result column="category" property="category" />
+        <result column="description" property="description" />
+        <result column="payment_method" property="paymentMethod" />
+        <result column="create_time" property="createTime" />
+    </resultMap>
+
+    <insert id="insert" parameterType="com.ruoyi.web.domain.travel.XlAaExpense">
+        INSERT INTO xl_aa_expense (bill_id, team_id, user_id, expense_name, amount, category, description, payment_method, create_time)
+        VALUES (#{billId}, #{teamId}, #{userId}, #{expenseName}, #{amount}, #{category}, #{description}, #{paymentMethod}, NOW())
+    </insert>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT * FROM xl_aa_expense WHERE id = #{id}
+    </select>
+
+    <select id="selectByBillId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT * FROM xl_aa_expense WHERE bill_id = #{billId}
+        ORDER BY create_time DESC
+    </select>
+
+    <select id="selectByTeamId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT * FROM xl_aa_expense WHERE team_id = #{teamId}
+        ORDER BY create_time DESC
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT * FROM xl_aa_expense ORDER BY create_time DESC
+    </select>
+</mapper>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.web.mapper.travel.XlUserPetMapper">
+    <resultMap type="com.ruoyi.web.domain.travel.XlUserPet" id="XlUserPetResult">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="petTemplateId" column="pet_template_id"/>
+        <result property="nickname" column="nickname"/>
+        <result property="hunger" column="hunger"/>
+        <result property="mood" column="mood"/>
+        <result property="level" column="level"/>
+        <result property="exp" column="exp"/>
+        <result property="evolutionStage" column="evolution_stage"/>
+        <result property="lastFeedAt" column="last_feed_at"/>
+        <result property="lastPlayAt" column="last_play_at"/>
+        <result property="gotAt" column="got_at"/>
+    </resultMap>
+    <insert id="insert" parameterType="com.ruoyi.web.domain.travel.XlUserPet" useGeneratedKeys="true" keyProperty="id">
+        insert into xl_user_pet (user_id, pet_template_id, nickname, hunger, mood, level, exp, evolution_stage, last_feed_at, last_play_at, got_at, create_time, update_time)
+        values (#{userId}, #{petTemplateId}, #{nickname}, #{hunger}, #{mood}, #{level}, #{exp}, #{evolutionStage}, #{lastFeedAt}, #{lastPlayAt}, now(), now(), now())
+    </insert>
+    <select id="selectById" resultMap="XlUserPetResult">
+        select id, user_id, pet_template_id, nickname, hunger, mood, level, exp, evolution_stage, last_feed_at, last_play_at, got_at from xl_user_pet where id = #{id}
+    </select>
+    <select id="selectByUserId" resultMap="XlUserPetResult">
+        select id, user_id, pet_template_id, nickname, hunger, mood, level, exp, evolution_stage, last_feed_at, last_play_at, got_at from xl_user_pet where user_id = #{userId} order by got_at desc
+    </select>
+    <update id="updateOwner">
+        update xl_user_pet set user_id = #{userId}, update_time = now() where id = #{id}
+    </update>
+    <update id="updateFeed">
+        update xl_user_pet set hunger = #{hunger}, level = #{level}, exp = #{exp}, evolution_stage = #{evolutionStage}, last_feed_at = now(), update_time = now() where id = #{id}
+    </update>
+    <update id="updatePlay">
+        update xl_user_pet set mood = #{mood}, level = #{level}, exp = #{exp}, evolution_stage = #{evolutionStage}, last_play_at = now(), update_time = now() where id = #{id}
+    </update>
+    <update id="updateNickname">
+        update xl_user_pet set nickname = #{nickname}, update_time = now() where id = #{id}
+    </update>
+    <select id="countByUserAndDestination" resultType="int">
+        select count(*) from xl_user_pet up join xl_pet_template pt on up.pet_template_id = pt.id where up.user_id = #{userId} and pt.destination_id = #{destinationId}
+    </select>
+</mapper>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.web.mapper.travel.XlCommentMapper">
+    <resultMap type="com.ruoyi.web.domain.travel.XlComment" id="XlCommentResult">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="targetType" column="target_type"/>
+        <result property="targetId" column="target_id"/>
+        <result property="content" column="content"/>
+        <result property="parentId" column="parent_id"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+    <insert id="insert" parameterType="com.ruoyi.web.domain.travel.XlComment" useGeneratedKeys="true" keyProperty="id">
+        insert into xl_comment (user_id, target_type, target_id, content, parent_id, create_time) values (#{userId}, #{targetType}, #{targetId}, #{content}, #{parentId}, now())
+    </insert>
+    <select id="selectByTarget" resultMap="XlCommentResult">
+        select id, user_id, target_type, target_id, content, parent_id, create_time from xl_comment where target_type = #{targetType} and target_id = #{targetId} order by id asc
+    </select>
+</mapper>

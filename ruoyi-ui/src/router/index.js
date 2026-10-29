@@ -47,6 +47,19 @@ export const constantRoutes = [
     hidden: true
   },
   {
+    path: '/travel/aa',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/travel/aa/index'),
+        name: 'AaManagement',
+        meta: { title: 'AA记账管理', icon: 'money' }
+      }
+    ]
+  },
+  {
     path: '/register',
     component: () => import('@/views/register'),
     hidden: true

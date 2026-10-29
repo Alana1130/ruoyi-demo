@@ -67,10 +67,8 @@ public class TokenService
         {
             try
             {
-                Claims claims = parseToken(token);
-                // 解析对应的权限以及用户信息
-                String uuid = (String) claims.get(Constants.LOGIN_USER_KEY);
-                String userKey = getTokenKey(uuid);
+                // 直接使用token作为key从redis中获取用户信息
+                String userKey = getTokenKey(token);
                 LoginUser user = redisCache.getCacheObject(userKey);
                 return user;
             }
@@ -218,10 +216,17 @@ public class TokenService
     private String getToken(HttpServletRequest request)
     {
         String token = request.getHeader(header);
+        log.debug("获取到的token header: {}", token);
         if (StringUtils.isNotEmpty(token) && token.startsWith(Constants.TOKEN_PREFIX))
         {
             token = token.replace(Constants.TOKEN_PREFIX, "");
+            log.debug("替换前缀后的token: {}", token);
+            if (StringUtils.isEmpty(token)) {
+                log.debug("token为空，返回null");
+                return null;
+            }
         }
+        log.debug("最终返回的token: {}", token);
         return token;
     }
 

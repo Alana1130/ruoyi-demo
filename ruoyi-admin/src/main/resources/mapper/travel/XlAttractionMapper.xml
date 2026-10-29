@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.web.mapper.travel.XlAttractionMapper">
+    <resultMap type="com.ruoyi.web.domain.travel.XlAttraction" id="XlAttractionResult">
+        <id property="id" column="id"/>
+        <result property="destinationId" column="destination_id"/>
+        <result property="name" column="name"/>
+        <result property="ticketPrice" column="ticket_price"/>
+        <result property="openingHours" column="opening_hours"/>
+        <result property="description" column="description"/>
+        <result property="image" column="image"/>
+        <result property="aiVerified" column="ai_verified"/>
+        <result property="latitude" column="latitude"/>
+        <result property="longitude" column="longitude"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+    <select id="selectById" resultMap="XlAttractionResult">select id, destination_id, name, ticket_price, opening_hours, description, image, ai_verified, latitude, longitude, create_by, create_time, update_by, update_time, remark from xl_attraction where id = #{id}</select>
+    <select id="selectByDestinationId" resultMap="XlAttractionResult">
+        select id, destination_id, name, ticket_price, opening_hours, description, image, ai_verified, latitude, longitude, create_by, create_time, update_by, update_time, remark from xl_attraction where destination_id = #{destinationId} order by id
+    </select>
+</mapper>

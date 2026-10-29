@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.web.mapper.travel.XlUserCheckinMapper">
+    <resultMap type="com.ruoyi.web.domain.travel.XlUserCheckin" id="XlUserCheckinResult">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="destinationId" column="destination_id"/>
+        <result property="starsEarned" column="stars_earned"/>
+        <result property="checkinAt" column="checkin_at"/>
+        <result property="destinationName" column="destination_name"/>
+        <result property="region" column="region"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+    <select id="selectByUserAndDestination" resultMap="XlUserCheckinResult">
+        select id, user_id, destination_id, stars_earned, checkin_at, create_by, create_time, update_by, update_time, remark from xl_user_checkin where user_id = #{userId} and destination_id = #{destinationId}
+    </select>
+    <select id="countByDestinationId" resultType="int">
+        select count(*) from xl_user_checkin where destination_id = #{destinationId}
+    </select>
+    <select id="selectMyCheckins" resultMap="XlUserCheckinResult">
+        select c.id, c.user_id, c.destination_id, c.stars_earned, c.checkin_at, d.name as destination_name, d.region from xl_user_checkin c left join xl_destination d on d.id = c.destination_id where c.user_id = #{userId} order by c.checkin_at desc
+    </select>
+    <insert id="insert" parameterType="com.ruoyi.web.domain.travel.XlUserCheckin" useGeneratedKeys="true" keyProperty="id">
+        insert into xl_user_checkin (user_id, destination_id, stars_earned, checkin_at, create_time) values (#{userId}, #{destinationId}, #{starsEarned}, now(), now())
+    </insert>
+</mapper>

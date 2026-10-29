@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.web.mapper.travel.XlChatMessageMapper">
+    <resultMap type="com.ruoyi.web.domain.travel.XlChatMessage" id="XlChatMessageResult">
+        <id property="id" column="id"/>
+        <result property="topicType" column="topic_type"/>
+        <result property="topicId" column="topic_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="parentId" column="parent_id"/>
+        <result property="nickname" column="nickname"/>
+        <result property="content" column="content"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+    <select id="selectByTopic" resultMap="XlChatMessageResult">
+        select id, topic_type, topic_id, user_id, parent_id, nickname, content, create_time
+        from xl_chat_message
+        where topic_type = #{topicType} and topic_id = #{topicId}
+        order by create_time asc
+    </select>
+    <select id="selectById" resultMap="XlChatMessageResult">
+        select id, topic_type, topic_id, user_id, parent_id, nickname, content, create_time
+        from xl_chat_message where id = #{id}
+    </select>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into xl_chat_message (topic_type, topic_id, user_id, parent_id, nickname, content, create_time)
+        values (#{topicType}, #{topicId}, #{userId}, #{parentId}, #{nickname}, #{content}, #{createTime})
+    </insert>
+</mapper>

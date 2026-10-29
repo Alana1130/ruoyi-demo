@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.web.mapper.travel.XlSemesterPlanMapper">
+    <resultMap type="com.ruoyi.web.domain.travel.XlSemesterPlan" id="XlSemesterPlanResult">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="name" column="name"/>
+        <result property="startDate" column="start_date"/>
+        <result property="endDate" column="end_date"/>
+        <result property="memo" column="memo"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+    <insert id="insert" parameterType="com.ruoyi.web.domain.travel.XlSemesterPlan" useGeneratedKeys="true" keyProperty="id">
+        insert into xl_semester_plan (user_id, name, start_date, end_date, memo, create_time, update_time)
+        values (#{userId}, #{name}, #{startDate}, #{endDate}, #{memo}, now(), now())
+    </insert>
+    <update id="update" parameterType="com.ruoyi.web.domain.travel.XlSemesterPlan">
+        update xl_semester_plan set name=#{name}, start_date=#{startDate}, end_date=#{endDate}, memo=#{memo}, update_time=now() where id=#{id} and user_id=#{userId}
+    </update>
+    <delete id="deleteById">
+        delete from xl_semester_plan where id=#{id} and user_id=#{userId}
+    </delete>
+    <select id="selectById" resultMap="XlSemesterPlanResult">
+        select id, user_id, name, start_date, end_date, memo, create_time, update_time from xl_semester_plan where id=#{id}
+    </select>
+    <select id="selectByUserId" resultMap="XlSemesterPlanResult">
+        select id, user_id, name, start_date, end_date, memo, create_time, update_time from xl_semester_plan where user_id=#{userId} order by start_date desc
+    </select>
+</mapper>

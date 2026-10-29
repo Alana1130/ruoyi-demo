@@ -4,7 +4,6 @@
 
 <script>
 import * as echarts from 'echarts'
-require('echarts/theme/macarons') // echarts theme
 import resize from './mixins/resize'
 
 export default {
@@ -20,7 +19,7 @@ export default {
     },
     height: {
       type: String,
-      default: '300px'
+      default: '320px'
     }
   },
   data() {
@@ -42,34 +41,138 @@ export default {
   },
   methods: {
     initChart() {
-      this.chart = echarts.init(this.$el, 'macarons')
-
+      this.chart = echarts.init(this.$el)
+      this.setOptions()
+    },
+    setOptions() {
       this.chart.setOption({
         tooltip: {
           trigger: 'item',
-          formatter: '{a} <br/>{b} : {c} ({d}%)'
+          backgroundColor: 'rgba(255, 255, 255, 0.95)',
+          borderColor: '#e4e7ed',
+          borderWidth: 1,
+          textStyle: {
+            color: '#606266'
+          },
+          padding: [10, 15],
+          formatter: '{a} <br/>{b}: {c} ({d}%)'
         },
         legend: {
-          left: 'center',
-          bottom: '10',
-          data: ['Industries', 'Technology', 'Forex', 'Gold', 'Forecasts']
+          orient: 'vertical',
+          right: '5%',
+          top: 'center',
+          itemWidth: 12,
+          itemHeight: 12,
+          itemGap: 16,
+          textStyle: {
+            color: '#606266',
+            fontSize: 13
+          },
+          formatter: function(name) {
+            return name
+          }
         },
         series: [
           {
-            name: 'WEEKLY WRITE ARTICLES',
+            name: '消费分类',
             type: 'pie',
-            roseType: 'radius',
-            radius: [15, 95],
-            center: ['50%', '38%'],
+            radius: ['45%', '70%'],
+            center: ['35%', '50%'],
+            avoidLabelOverlap: true,
+            label: {
+              show: false,
+              position: 'center'
+            },
+            emphasis: {
+              label: {
+                show: true,
+                fontSize: 16,
+                fontWeight: 'bold'
+              },
+              itemStyle: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: 'rgba(0, 0, 0, 0.3)'
+              }
+            },
+            labelLine: {
+              show: false
+            },
             data: [
-              { value: 320, name: 'Industries' },
-              { value: 240, name: 'Technology' },
-              { value: 149, name: 'Forex' },
-              { value: 100, name: 'Gold' },
-              { value: 59, name: 'Forecasts' }
+              {
+                value: 3200,
+                name: '餐饮',
+                itemStyle: {
+                  color: {
+                    type: 'linear',
+                    x: 0, y: 0, x2: 1, y2: 1,
+                    colorStops: [
+                      { offset: 0, color: '#667eea' },
+                      { offset: 1, color: '#764ba2' }
+                    ]
+                  }
+                }
+              },
+              {
+                value: 2400,
+                name: '交通',
+                itemStyle: {
+                  color: {
+                    type: 'linear',
+                    x: 0, y: 0, x2: 1, y2: 1,
+                    colorStops: [
+                      { offset: 0, color: '#f093fb' },
+                      { offset: 1, color: '#f5576c' }
+                    ]
+                  }
+                }
+              },
+              {
+                value: 1490,
+                name: '住宿',
+                itemStyle: {
+                  color: {
+                    type: 'linear',
+                    x: 0, y: 0, x2: 1, y2: 1,
+                    colorStops: [
+                      { offset: 0, color: '#4facfe' },
+                      { offset: 1, color: '#00f2fe' }
+                    ]
+                  }
+                }
+              },
+              {
+                value: 1000,
+                name: '门票',
+                itemStyle: {
+                  color: {
+                    type: 'linear',
+                    x: 0, y: 0, x2: 1, y2: 1,
+                    colorStops: [
+                      { offset: 0, color: '#43e97b' },
+                      { offset: 1, color: '#38f9d7' }
+                    ]
+                  }
+                }
+              },
+              {
+                value: 590,
+                name: '其他',
+                itemStyle: {
+                  color: {
+                    type: 'linear',
+                    x: 0, y: 0, x2: 1, y2: 1,
+                    colorStops: [
+                      { offset: 0, color: '#feca57' },
+                      { offset: 1, color: '#ff9f43' }
+                    ]
+                  }
+                }
+              }
             ],
-            animationEasing: 'cubicInOut',
-            animationDuration: 2600
+            animationType: 'scale',
+            animationEasing: 'elasticOut',
+            animationDuration: 2000
           }
         ]
       })

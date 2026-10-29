@@ -1,0 +1,284 @@
+/* 全局通用样式 —— 星旅设计系统（山野纸感 · 墨绿 + 星金）
+ * 说明：只做视觉层，不改动任何业务结构与交互 */
+
+/* 页面容器 */
+.page-wrap {
+  min-height: 100vh;
+  background: var(--xlv-paper, #f5f2ea);
+  padding: 24rpx;
+  padding-bottom: 120rpx;
+  box-sizing: border-box;
+}
+
+/* 分区标题（金色短竖线 + 标题 + 可选副标题） */
+.section-title {
+  display: flex;
+  align-items: baseline;
+  font-size: 34rpx;
+  font-weight: 700;
+  color: var(--xlv-ink, #16211c);
+  letter-spacing: 1rpx;
+  margin: 40rpx 0 20rpx;
+  padding-left: 20rpx;
+  border-left: 6rpx solid var(--xlv-gold, #c9a227);
+  line-height: 1.35;
+}
+
+.section-title:first-child { margin-top: 0; }
+
+.section-desc {
+  margin-left: 12rpx;
+  font-size: 22rpx;
+  font-weight: 400;
+  color: var(--xlv-muted, #8a948f);
+  letter-spacing: 0;
+}
+
+/* 卡片基础 */
+.card-base {
+  background: var(--xlv-card, #fff);
+  border-radius: var(--xlv-radius-lg, 28rpx);
+  border: 1rpx solid rgba(31, 61, 47, 0.06);
+  padding: 28rpx;
+  margin-bottom: 24rpx;
+  box-shadow: var(--xlv-shadow, 0 10rpx 30rpx rgba(22, 33, 28, 0.06));
+}
+
+/* 深色主视觉块 */
+.xlv-hero {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--xlv-radius-lg, 28rpx);
+  background: linear-gradient(150deg, #2b5340 0%, #1f3d2f 58%, #172f24 100%);
+  padding: 36rpx 32rpx;
+  box-shadow: 0 16rpx 40rpx rgba(22, 33, 28, 0.18);
+}
+
+.xlv-hero::after {
+  content: '';
+  position: absolute;
+  right: -120rpx;
+  top: -140rpx;
+  width: 380rpx;
+  height: 380rpx;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(201, 162, 39, 0.35) 0%, rgba(201, 162, 39, 0) 68%);
+  pointer-events: none;
+}
+
+.xlv-hero-title {
+  font-size: 44rpx;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 2rpx;
+  line-height: 1.3;
+}
+
+.xlv-hero-desc {
+  margin-top: 10rpx;
+  font-size: 25rpx;
+  color: rgba(255, 255, 255, 0.72);
+  line-height: 1.5;
+}
+
+/* 图标底片 */
+.xlv-icon-tile {
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: 24rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 42rpx;
+  background: rgba(45, 90, 61, 0.08);
+}
+
+.xlv-icon-tile.gold { background: var(--xlv-gold-soft, #f4e9cb); }
+.xlv-icon-tile.moss { background: rgba(110, 143, 125, 0.16); }
+.xlv-icon-tile.clay { background: rgba(191, 74, 60, 0.1); }
+.xlv-icon-tile.sky { background: rgba(74, 111, 165, 0.1); }
+.xlv-icon-tile.plum { background: rgba(122, 96, 148, 0.12); }
+
+/* 标签 */
+.tag {
+  display: inline-block;
+  padding: 8rpx 20rpx;
+  border-radius: 999rpx;
+  font-size: 23rpx;
+  background: rgba(45, 90, 61, 0.09);
+  color: var(--xlv-forest-2, #2d5a3d);
+}
+
+.tag.star {
+  background: linear-gradient(135deg, #f7ecd0 0%, #e9d5a4 100%);
+  color: #7a6320;
+  font-weight: 600;
+}
+
+.tag.ghost {
+  background: transparent;
+  border: 1rpx solid var(--xlv-line, #e8e1d1);
+  color: var(--xlv-muted, #8a948f);
+}
+
+/* 主按钮 */
+.btn-primary {
+  background: linear-gradient(135deg, #3a6a4b 0%, #23503a 100%);
+  color: #fff;
+  font-size: 30rpx;
+  font-weight: 600;
+  letter-spacing: 1rpx;
+  padding: 24rpx;
+  border-radius: var(--xlv-radius-md, 20rpx);
+  border: none;
+  width: 100%;
+  box-sizing: border-box;
+  box-shadow: 0 10rpx 24rpx rgba(31, 61, 47, 0.18);
+}
+
+.btn-primary::after { border: none; }
+
+/* 次级按钮 */
+.btn-ghost {
+  background: transparent;
+  color: var(--xlv-forest-2, #2d5a3d);
+  font-size: 28rpx;
+  font-weight: 600;
+  padding: 20rpx 32rpx;
+  border-radius: var(--xlv-radius-md, 20rpx);
+  border: 1rpx solid var(--xlv-forest-2, #2d5a3d);
+  text-align: center;
+}
+
+/* 金色按钮 */
+.btn-gold {
+  background: linear-gradient(135deg, #d8b443 0%, #c9a227 100%);
+  color: #4a3b0b;
+  font-size: 28rpx;
+  font-weight: 700;
+  padding: 20rpx 32rpx;
+  border-radius: var(--xlv-radius-md, 20rpx);
+  text-align: center;
+}
+
+/* 通用列表行 */
+.xlv-row {
+  display: flex;
+  align-items: center;
+  padding: 26rpx 28rpx;
+  background: var(--xlv-card, #fff);
+  border-radius: var(--xlv-radius-lg, 28rpx);
+  border: 1rpx solid rgba(31, 61, 47, 0.06);
+  box-shadow: 0 6rpx 20rpx rgba(22, 33, 28, 0.04);
+  margin-bottom: 20rpx;
+}
+
+/* 细分隔线 */
+.xlv-hr {
+  height: 1rpx;
+  background: var(--xlv-line, #e8e1d1);
+  opacity: 0.7;
+}
+
+/* 数字强调 */
+.xlv-num {
+  font-size: 40rpx;
+  font-weight: 700;
+  color: var(--xlv-forest, #1f3d2f);
+  letter-spacing: -0.5rpx;
+}
+
+.xlv-gold-text { color: var(--xlv-gold, #c9a227); }
+.xlv-muted { color: var(--xlv-muted, #8a948f); }
+
+/* 分段选择 */
+.xlv-seg {
+  display: flex;
+  gap: 12rpx;
+  padding: 8rpx;
+  background: rgba(31, 61, 47, 0.05);
+  border-radius: 999rpx;
+}
+
+.xlv-seg-item {
+  flex: 1;
+  text-align: center;
+  padding: 16rpx 20rpx;
+  font-size: 26rpx;
+  color: var(--xlv-ink-2, #46534c);
+  border-radius: 999rpx;
+  white-space: nowrap;
+}
+
+.xlv-seg-item.active {
+  background: #fff;
+  color: var(--xlv-forest, #1f3d2f);
+  font-weight: 700;
+  box-shadow: 0 4rpx 14rpx rgba(22, 33, 28, 0.08);
+}
+
+/* 空状态 */
+.empty-state {
+  text-align: center;
+  padding: 96rpx 40rpx;
+  color: var(--xlv-muted, #8a948f);
+  font-size: 28rpx;
+  line-height: 1.6;
+}
+
+.empty-state .empty-icon {
+  width: 128rpx;
+  height: 128rpx;
+  margin: 0 auto 24rpx;
+  border-radius: 50%;
+  background: rgba(31, 61, 47, 0.05);
+  font-size: 60rpx;
+  line-height: 128rpx;
+  opacity: 0.9;
+}
+
+.empty-hint {
+  display: block;
+  margin-top: 14rpx;
+  font-size: 24rpx;
+  color: var(--xlv-gold, #c9a227);
+}
+
+/* 加载中 */
+.loading-wrap {
+  text-align: center;
+  padding: 60rpx;
+  color: var(--xlv-muted, #8a948f);
+  font-size: 26rpx;
+  letter-spacing: 1rpx;
+}
+
+/* 骨架屏 */
+.xlv-skeleton {
+  background: linear-gradient(90deg, #efece2 25%, #f7f5ee 37%, #efece2 63%);
+  background-size: 400% 100%;
+  animation: xlv-shimmer 1.4s ease infinite;
+  border-radius: var(--xlv-radius-md, 20rpx);
+}
+
+@keyframes xlv-shimmer {
+  0% { background-position: 100% 50%; }
+  100% { background-position: 0 50%; }
+}
+
+/* 底部操作条（含安全区） */
+.xlv-bottom-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  padding: 20rpx 24rpx;
+  padding-bottom: calc(20rpx + constant(safe-area-inset-bottom));
+  padding-bottom: calc(20rpx + env(safe-area-inset-bottom));
+  background: rgba(255, 255, 255, 0.96);
+  border-top: 1rpx solid var(--xlv-line, #e8e1d1);
+}

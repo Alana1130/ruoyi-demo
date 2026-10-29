@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.web.mapper.travel.XlDestinationMapper">
+    <resultMap type="com.ruoyi.web.domain.travel.XlDestination" id="XlDestinationResult">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="region" column="region"/>
+        <result property="description" column="description"/>
+        <result property="coverImage" column="cover_image"/>
+        <result property="starReward" column="star_reward"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+    <sql id="selectVo">select id, name, region, description, cover_image, star_reward, create_by, create_time, update_by, update_time, remark from xl_destination</sql>
+    <select id="selectById" resultMap="XlDestinationResult">
+        <include refid="selectVo"/> where id = #{id}
+    </select>
+    <select id="selectList" resultMap="XlDestinationResult">
+        <include refid="selectVo"/>
+        <where></where>
+        order by id
+    </select>
+    <select id="selectByKeyword" resultMap="XlDestinationResult">
+        <include refid="selectVo"/>
+        <where>
+            <if test="keyword != null and keyword != ''">
+                and (name like concat('%', #{keyword}, '%') or region like concat('%', #{keyword}, '%'))
+            </if>
+        </where>
+        order by id limit 50
+    </select>
+</mapper>

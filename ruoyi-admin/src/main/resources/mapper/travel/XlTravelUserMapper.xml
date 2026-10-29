@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.web.mapper.travel.XlTravelUserMapper">
+    <resultMap type="com.ruoyi.web.domain.travel.XlTravelUser" id="XlTravelUserResult">
+        <id property="id" column="id"/>
+        <result property="openid" column="openid"/>
+        <result property="nickname" column="nickname"/>
+        <result property="avatar" column="avatar"/>
+        <result property="stars" column="stars"/>
+        <result property="phone" column="phone"/>
+        <result property="password" column="password"/>
+        <result property="schoolId" column="school_id"/>
+        <result property="schoolVerified" column="school_verified"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+    <select id="selectById" resultMap="XlTravelUserResult">select id, openid, nickname, avatar, stars, phone, password, school_id, school_verified, create_by, create_time, update_by, update_time, remark from xl_travel_user where id = #{id}</select>
+    <select id="selectByOpenid" resultMap="XlTravelUserResult">select id, openid, nickname, avatar, stars, phone, password, school_id, school_verified, create_by, create_time, update_by, update_time, remark from xl_travel_user where openid = #{openid}</select>
+    <select id="selectByPhone" resultMap="XlTravelUserResult">select id, openid, nickname, avatar, stars, phone, password, school_id, school_verified, create_by, create_time, update_by, update_time, remark from xl_travel_user where phone = #{phone}</select>
+    <insert id="insert" parameterType="com.ruoyi.web.domain.travel.XlTravelUser" useGeneratedKeys="true" keyProperty="id">
+        insert into xl_travel_user (openid, nickname, avatar, stars, phone, password, school_id, school_verified, create_time) values (#{openid}, #{nickname}, #{avatar}, #{stars}, #{phone}, #{password}, #{schoolId}, #{schoolVerified}, now())
+    </insert>
+    <update id="updateStars">
+        update xl_travel_user set stars = stars + #{addStars}, update_time = now() where id = #{id}
+    </update>
+    <update id="updateProfile" parameterType="com.ruoyi.web.domain.travel.XlTravelUser">
+        update xl_travel_user
+        <set>
+            <if test="nickname != null">nickname = #{nickname},</if>
+            <if test="avatar != null">avatar = #{avatar},</if>
+            update_time = now()
+        </set>
+        where id = #{id}
+    </update>
+    <update id="updatePassword">
+        update xl_travel_user set password = #{password}, update_time = now() where id = #{id}
+    </update>
+    <update id="updatePhoneAndPassword">
+        update xl_travel_user set phone = #{phone}, password = #{password}, update_time = now() where id = #{id} and (phone is null or phone = '')
+    </update>
+    <update id="updateSchoolVerify">
+        update xl_travel_user set school_id = #{schoolId}, school_verified = 1, update_time = now() where id = #{id}
+    </update>
+</mapper>

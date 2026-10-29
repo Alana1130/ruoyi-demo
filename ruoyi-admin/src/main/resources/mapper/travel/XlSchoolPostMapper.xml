@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.web.mapper.travel.XlSchoolPostMapper">
+    <resultMap type="com.ruoyi.web.domain.travel.XlSchoolPost" id="XlSchoolPostResult">
+        <id property="id" column="id"/>
+        <result property="schoolId" column="school_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="content" column="content"/>
+        <result property="images" column="images"/>
+        <result property="createTime" column="create_time"/>
+        <result property="nickname" column="nickname"/>
+        <result property="avatar" column="avatar"/>
+    </resultMap>
+    <insert id="insert" parameterType="com.ruoyi.web.domain.travel.XlSchoolPost" useGeneratedKeys="true" keyProperty="id">
+        insert into xl_school_post (school_id, user_id, content, images, create_time) values (#{schoolId}, #{userId}, #{content}, #{images}, now())
+    </insert>
+    <select id="selectBySchoolId" resultMap="XlSchoolPostResult">
+        select p.id, p.school_id, p.user_id, p.content, p.images, p.create_time, u.nickname, u.avatar
+        from xl_school_post p left join xl_travel_user u on p.user_id = u.id
+        where p.school_id = #{schoolId} order by p.create_time desc limit #{limit} offset #{offset}
+    </select>
+    <select id="countBySchoolId" resultType="int">select count(*) from xl_school_post where school_id = #{schoolId}</select>
+</mapper>

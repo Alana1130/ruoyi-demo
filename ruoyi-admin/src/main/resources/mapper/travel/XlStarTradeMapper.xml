@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.web.mapper.travel.XlStarTradeMapper">
+    <resultMap type="com.ruoyi.web.domain.travel.XlStarTrade" id="XlStarTradeResult">
+        <id property="id" column="id"/>
+        <result property="sellerId" column="seller_id"/>
+        <result property="buyerId" column="buyer_id"/>
+        <result property="itemType" column="item_type"/>
+        <result property="itemId" column="item_id"/>
+        <result property="starsAmount" column="stars_amount"/>
+        <result property="status" column="status"/>
+        <result property="createTime" column="created_at"/>
+        <result property="completedAt" column="completed_at"/>
+    </resultMap>
+    <insert id="insert" parameterType="com.ruoyi.web.domain.travel.XlStarTrade" useGeneratedKeys="true" keyProperty="id">
+        insert into xl_star_trade (seller_id, buyer_id, item_type, item_id, stars_amount, status, created_at, completed_at) values (#{sellerId}, #{buyerId}, #{itemType}, #{itemId}, #{starsAmount}, #{status}, now(), #{completedAt})
+    </insert>
+    <select id="selectById" resultMap="XlStarTradeResult">
+        select id, seller_id, buyer_id, item_type, item_id, stars_amount, status, created_at, completed_at from xl_star_trade where id = #{id}
+    </select>
+    <select id="selectListings" resultMap="XlStarTradeResult">
+        select id, seller_id, buyer_id, item_type, item_id, stars_amount, status, created_at from xl_star_trade where status = '0'
+        <if test="itemType != null and itemType != ''">and item_type = #{itemType}</if>
+        <if test="excludeSellerId != null">and seller_id != #{excludeSellerId}</if>
+        order by created_at desc limit #{limit}
+    </select>
+    <select id="selectBySellerIdAndStatus" resultMap="XlStarTradeResult">
+        select id, seller_id, buyer_id, item_type, item_id, stars_amount, status, created_at from xl_star_trade where seller_id = #{sellerId} and status = #{status} order by created_at desc
+    </select>
+    <select id="selectListedItemIdsBySeller" resultType="long">
+        select item_id from xl_star_trade where seller_id = #{sellerId} and status = '0' and item_type = #{itemType}
+    </select>
+    <select id="selectListingByItem" resultMap="XlStarTradeResult">
+        select id, seller_id, buyer_id, item_type, item_id, stars_amount, status, created_at from xl_star_trade where status = '0' and item_type = #{itemType} and item_id = #{itemId} limit 1
+    </select>
+    <update id="updateToCompleted">
+        update xl_star_trade set buyer_id = #{buyerId}, status = '1', completed_at = now() where id = #{id}
+    </update>
+    <update id="updateToCancelled">
+        update xl_star_trade set status = '2' where id = #{id}
+    </update>
+</mapper>

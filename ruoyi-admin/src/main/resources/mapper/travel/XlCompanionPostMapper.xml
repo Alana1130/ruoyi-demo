@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.web.mapper.travel.XlCompanionPostMapper">
+    <resultMap type="com.ruoyi.web.domain.travel.XlCompanionPost" id="XlCompanionPostResult">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="destinationId" column="destination_id"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="travelDateStart" column="travel_date_start"/>
+        <result property="travelDateEnd" column="travel_date_end"/>
+        <result property="budgetRange" column="budget_range"/>
+        <result property="contactRemark" column="contact_remark"/>
+        <result property="status" column="status"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+    <insert id="insert" parameterType="com.ruoyi.web.domain.travel.XlCompanionPost" useGeneratedKeys="true" keyProperty="id">
+        insert into xl_companion_post (user_id, destination_id, title, content, travel_date_start, travel_date_end, budget_range, contact_remark, status, create_time, update_time)
+        values (#{userId}, #{destinationId}, #{title}, #{content}, #{travelDateStart}, #{travelDateEnd}, #{budgetRange}, #{contactRemark}, #{status}, now(), now())
+    </insert>
+    <select id="selectById" resultMap="XlCompanionPostResult">
+        select id, user_id, destination_id, title, content, travel_date_start, travel_date_end, budget_range, contact_remark, status, create_time, update_time
+        from xl_companion_post where id = #{id}
+    </select>
+    <select id="selectList" resultMap="XlCompanionPostResult">
+        select id, user_id, destination_id, title, content, travel_date_start, travel_date_end, budget_range, contact_remark, status, create_time
+        from xl_companion_post
+        <where>
+            <if test="status != null and status != ''">and status = #{status}</if>
+            <if test="destinationId != null">and destination_id = #{destinationId}</if>
+            <if test="keyword != null and keyword != ''">and (title like concat('%', #{keyword}, '%') or content like concat('%', #{keyword}, '%'))</if>
+            <if test="dateFrom != null">and (travel_date_end is null or travel_date_end &gt;= #{dateFrom})</if>
+            <if test="dateTo != null">and (travel_date_start is null or travel_date_start &lt;= #{dateTo})</if>
+        </where>
+        order by create_time desc
+    </select>
+    <update id="update" parameterType="com.ruoyi.web.domain.travel.XlCompanionPost">
+        update xl_companion_post
+        <set>
+            <if test="title != null">title = #{title},</if>
+            <if test="content != null">content = #{content},</if>
+            <if test="travelDateStart != null">travel_date_start = #{travelDateStart},</if>
+            <if test="travelDateEnd != null">travel_date_end = #{travelDateEnd},</if>
+            <if test="budgetRange != null">budget_range = #{budgetRange},</if>
+            <if test="contactRemark != null">contact_remark = #{contactRemark},</if>
+            <if test="status != null">status = #{status},</if>
+            update_time = now()
+        </set>
+        where id = #{id}
+    </update>
+    <delete id="deleteByIdAndUser">
+        delete from xl_companion_post where id = #{id} and user_id = #{userId}
+    </delete>
+</mapper>

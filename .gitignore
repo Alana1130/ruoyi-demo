@@ -45,3 +45,9 @@ nbdist/
 !*/build/*.java
 !*/build/*.html
 !*/build/*.xml
+
+######################################################################
+# uni-app / HBuilderX（移动端 xinglvQ）
+unpackage/
+.hbuilderx/
+*.private.config.json

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.web.mapper.travel.XlFoodLicenseTemplateMapper">
+    <resultMap type="com.ruoyi.web.domain.travel.XlFoodLicenseTemplate" id="XlFoodLicenseTemplateResult">
+        <id property="id" column="id"/>
+        <result property="destinationId" column="destination_id"/>
+        <result property="name" column="name"/>
+        <result property="icon" column="icon"/>
+        <result property="description" column="description"/>
+        <result property="sortOrder" column="sort_order"/>
+    </resultMap>
+    <select id="selectByDestinationId" resultMap="XlFoodLicenseTemplateResult">
+        select id, destination_id, name, icon, description, sort_order from xl_food_license_template where destination_id = #{destinationId} order by sort_order, id
+    </select>
+    <select id="selectAll" resultMap="XlFoodLicenseTemplateResult">
+        select id, destination_id, name, icon, description, sort_order from xl_food_license_template order by destination_id, sort_order, id
+    </select>
+    <select id="selectById" resultMap="XlFoodLicenseTemplateResult">
+        select id, destination_id, name, icon, description, sort_order from xl_food_license_template where id = #{id}
+    </select>
+</mapper>

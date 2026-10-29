@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.web.mapper.travel.XlSemesterPlanDestMapper">
+    <insert id="insert">
+        insert into xl_semester_plan_dest (plan_id, destination_id, sort_order, create_time) values (#{planId}, #{destinationId}, #{sortOrder}, now())
+    </insert>
+    <delete id="deleteByPlanId">delete from xl_semester_plan_dest where plan_id=#{planId}</delete>
+    <select id="selectDestinationIdsByPlanId" resultType="long">
+        select destination_id from xl_semester_plan_dest where plan_id=#{planId} order by sort_order, id
+    </select>
+</mapper>

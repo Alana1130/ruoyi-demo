@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.web.mapper.travel.XlDestinationWishMapper">
+    <resultMap type="com.ruoyi.web.domain.travel.XlDestinationWish" id="XlDestinationWishResult">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="destinationId" column="destination_id"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+    <insert id="insert" parameterType="com.ruoyi.web.domain.travel.XlDestinationWish" useGeneratedKeys="true" keyProperty="id">
+        insert into xl_destination_wish (user_id, destination_id, create_time) values (#{userId}, #{destinationId}, now())
+    </insert>
+    <delete id="deleteByUserAndDestination">
+        delete from xl_destination_wish where user_id = #{userId} and destination_id = #{destinationId}
+    </delete>
+    <select id="countByDestinationId" resultType="int">
+        select count(*) from xl_destination_wish where destination_id = #{destinationId}
+    </select>
+    <select id="selectByUserAndDestination" resultMap="XlDestinationWishResult">
+        select id, user_id, destination_id, create_time from xl_destination_wish where user_id = #{userId} and destination_id = #{destinationId} limit 1
+    </select>
+</mapper>

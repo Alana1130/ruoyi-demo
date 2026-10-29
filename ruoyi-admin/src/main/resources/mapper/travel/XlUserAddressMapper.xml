@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.web.mapper.travel.XlUserAddressMapper">
+    <resultMap type="com.ruoyi.web.domain.travel.XlUserAddress" id="XlUserAddressResult">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="receiverName" column="receiver_name"/>
+        <result property="receiverPhone" column="receiver_phone"/>
+        <result property="receiverAddress" column="receiver_address"/>
+        <result property="isDefault" column="is_default"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+    <select id="selectByUserId" resultMap="XlUserAddressResult">
+        select id, user_id, receiver_name, receiver_phone, receiver_address, is_default, create_time
+        from xl_user_address where user_id = #{userId} order by is_default desc, create_time desc
+    </select>
+    <select id="selectById" resultMap="XlUserAddressResult">
+        select id, user_id, receiver_name, receiver_phone, receiver_address, is_default, create_time
+        from xl_user_address where id = #{id}
+    </select>
+    <insert id="insert" parameterType="com.ruoyi.web.domain.travel.XlUserAddress" useGeneratedKeys="true" keyProperty="id">
+        insert into xl_user_address (user_id, receiver_name, receiver_phone, receiver_address, is_default, create_time)
+        values (#{userId}, #{receiverName}, #{receiverPhone}, #{receiverAddress}, #{isDefault}, now())
+    </insert>
+    <update id="update" parameterType="com.ruoyi.web.domain.travel.XlUserAddress">
+        update xl_user_address
+        <set>
+            <if test="receiverName != null">receiver_name = #{receiverName},</if>
+            <if test="receiverPhone != null">receiver_phone = #{receiverPhone},</if>
+            <if test="receiverAddress != null">receiver_address = #{receiverAddress},</if>
+            <if test="isDefault != null">is_default = #{isDefault},</if>
+            update_time = now()
+        </set>
+        where id = #{id}
+    </update>
+    <delete id="deleteById">
+        delete from xl_user_address where id = #{id}
+    </delete>
+    <update id="clearDefaultByUserId">
+        update xl_user_address set is_default = 0, update_time = now() where user_id = #{userId}
+    </update>
+</mapper>

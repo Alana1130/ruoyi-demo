@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.web.mapper.travel.XlIdleItemMapper">
+    <resultMap type="com.ruoyi.web.domain.travel.XlIdleItem" id="XlIdleItemResult">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="title" column="title"/>
+        <result property="category" column="category"/>
+        <result property="description" column="description"/>
+        <result property="priceStars" column="price_stars"/>
+        <result property="images" column="images"/>
+        <result property="status" column="status"/>
+        <result property="buyerId" column="buyer_id"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+    <insert id="insert" parameterType="com.ruoyi.web.domain.travel.XlIdleItem" useGeneratedKeys="true" keyProperty="id">
+        insert into xl_idle_item (user_id, title, category, description, price_stars, images, status, create_time, update_time)
+        values (#{userId}, #{title}, #{category}, #{description}, #{priceStars}, #{images}, '0', now(), now())
+    </insert>
+    <update id="update" parameterType="com.ruoyi.web.domain.travel.XlIdleItem">
+        update xl_idle_item set title=#{title}, category=#{category}, description=#{description}, price_stars=#{priceStars}, images=#{images}, update_time=now() where id=#{id} and user_id=#{userId}
+    </update>
+    <update id="updateStatusAndBuyer">
+        update xl_idle_item set status=#{status}, buyer_id=#{buyerId}, update_time=now() where id=#{id}
+    </update>
+    <delete id="deleteByIdAndUser">
+        delete from xl_idle_item where id=#{id} and user_id=#{userId} and status='0'
+    </delete>
+    <select id="selectById" resultMap="XlIdleItemResult">
+        select id, user_id, title, category, description, price_stars, images, status, buyer_id, create_time, update_time from xl_idle_item where id=#{id}
+    </select>
+    <select id="selectByUserId" resultMap="XlIdleItemResult">
+        select id, user_id, title, category, description, price_stars, images, status, buyer_id, create_time, update_time from xl_idle_item where user_id=#{userId} order by create_time desc
+    </select>
+    <select id="selectOnSale" resultMap="XlIdleItemResult">
+        select id, user_id, title, category, description, price_stars, images, status, buyer_id, create_time, update_time from xl_idle_item where status='0'
+        <if test="category != null and category != ''">and category=#{category}</if>
+        order by create_time desc limit #{limit}
+    </select>
+</mapper>

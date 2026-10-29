@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.web.mapper.travel.XlUserExchangeMapper">
+    <resultMap type="com.ruoyi.web.domain.travel.XlUserExchange" id="XlUserExchangeResult">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="rewardItemId" column="reward_item_id"/>
+        <result property="exchangedAt" column="exchanged_at"/>
+        <result property="itemName" column="item_name"/>
+        <result property="starsCost" column="stars_cost"/>
+        <result property="type" column="type"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+    <insert id="insert" parameterType="com.ruoyi.web.domain.travel.XlUserExchange" useGeneratedKeys="true" keyProperty="id">
+        insert into xl_user_exchange (user_id, reward_item_id, exchanged_at, create_time) values (#{userId}, #{rewardItemId}, now(), now())
+    </insert>
+    <select id="selectByUserId" resultMap="XlUserExchangeResult">
+        select e.id, e.user_id, e.reward_item_id, e.exchanged_at, r.name as item_name, r.stars_cost, r.type from xl_user_exchange e left join xl_reward_item r on r.id = e.reward_item_id where e.user_id = #{userId} order by e.exchanged_at desc
+    </select>
+</mapper>

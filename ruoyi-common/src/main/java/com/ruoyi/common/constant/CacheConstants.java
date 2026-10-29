@@ -41,4 +41,9 @@ public class CacheConstants
      * 登录账户密码错误次数 redis key
      */
     public static final String PWD_ERR_CNT_KEY = "pwd_err_cnt:";
+
+    /**
+     * 旅游小程序用户 token redis key（travel_tokens: + token -> userId）
+     */
+    public static final String TRAVEL_TOKEN_KEY = "travel_tokens:";
 }

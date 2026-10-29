@@ -4,7 +4,6 @@
 
 <script>
 import * as echarts from 'echarts'
-require('echarts/theme/macarons') // echarts theme
 import resize from './mixins/resize'
 
 export default {
@@ -20,7 +19,7 @@ export default {
     },
     height: {
       type: String,
-      default: '350px'
+      default: '320px'
     },
     autoResize: {
       type: Boolean,
@@ -58,76 +57,140 @@ export default {
   },
   methods: {
     initChart() {
-      this.chart = echarts.init(this.$el, 'macarons')
+      this.chart = echarts.init(this.$el)
       this.setOptions(this.chartData)
     },
     setOptions({ expectedData, actualData } = {}) {
       this.chart.setOption({
-        xAxis: {
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-          boundaryGap: false,
-          axisTick: {
-            show: false
-          }
-        },
         grid: {
-          left: 10,
-          right: 10,
-          bottom: 20,
-          top: 30,
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          top: '15%',
           containLabel: true
         },
         tooltip: {
           trigger: 'axis',
           axisPointer: {
-            type: 'cross'
+            type: 'cross',
+            crossStyle: {
+              color: '#999'
+            }
           },
-          padding: [5, 10]
+          backgroundColor: 'rgba(255, 255, 255, 0.95)',
+          borderColor: '#e4e7ed',
+          borderWidth: 1,
+          textStyle: {
+            color: '#606266'
+          },
+          padding: [10, 15]
         },
-        yAxis: {
+        legend: {
+          data: ['预算', '实际'],
+          top: 0,
+          textStyle: {
+            color: '#606266'
+          },
+          itemWidth: 20,
+          itemHeight: 10
+        },
+        xAxis: {
+          type: 'category',
+          data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+          boundaryGap: false,
+          axisLine: {
+            lineStyle: {
+              color: '#e4e7ed'
+            }
+          },
+          axisLabel: {
+            color: '#909399'
+          },
           axisTick: {
             show: false
           }
         },
-        legend: {
-          data: ['expected', 'actual']
-        },
-        series: [{
-          name: 'expected', itemStyle: {
-            normal: {
-              color: '#FF005A',
-              lineStyle: {
-                color: '#FF005A',
-                width: 2
-              }
-            }
+        yAxis: {
+          type: 'value',
+          axisLine: {
+            show: false
           },
-          smooth: true,
-          type: 'line',
-          data: expectedData,
-          animationDuration: 2800,
-          animationEasing: 'cubicInOut'
-        },
-        {
-          name: 'actual',
-          smooth: true,
-          type: 'line',
-          itemStyle: {
-            normal: {
-              color: '#3888fa',
-              lineStyle: {
-                color: '#3888fa',
-                width: 2
-              },
-              areaStyle: {
-                color: '#f3f8ff'
-              }
-            }
+          axisTick: {
+            show: false
           },
-          data: actualData,
-          animationDuration: 2800,
-          animationEasing: 'quadraticOut'
-        }]
+          axisLabel: {
+            color: '#909399'
+          },
+          splitLine: {
+            lineStyle: {
+              color: '#f0f2f5'
+            }
+          }
+        },
+        series: [
+          {
+            name: '预算',
+            type: 'line',
+            smooth: true,
+            symbol: 'circle',
+            symbolSize: 8,
+            data: expectedData,
+            itemStyle: {
+              color: '#667eea',
+              borderWidth: 2
+            },
+            lineStyle: {
+              color: '#667eea',
+              width: 3
+            },
+            areaStyle: {
+              color: {
+                type: 'linear',
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                colorStops: [
+                  { offset: 0, color: 'rgba(102, 126, 234, 0.25)' },
+                  { offset: 1, color: 'rgba(102, 126, 234, 0.02)' }
+                ]
+              }
+            },
+            animationDuration: 2000,
+            animationEasing: 'cubicInOut'
+          },
+          {
+            name: '实际',
+            type: 'line',
+            smooth: true,
+            symbol: 'circle',
+            symbolSize: 8,
+            data: actualData,
+            itemStyle: {
+              color: '#f093fb',
+              borderWidth: 2
+            },
+            lineStyle: {
+              color: '#f093fb',
+              width: 3
+            },
+            areaStyle: {
+              color: {
+                type: 'linear',
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                colorStops: [
+                  { offset: 0, color: 'rgba(240, 147, 251, 0.25)' },
+                  { offset: 1, color: 'rgba(240, 147, 251, 0.02)' }
+                ]
+              }
+            },
+            animationDuration: 2000,
+            animationEasing: 'cubicInOut'
+          }
+        ]
       })
     }
   }
